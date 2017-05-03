@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.example.palexis3.quicksign.Adapter.RecyclerTemplateAdapter;
@@ -13,11 +12,12 @@ import com.example.palexis3.quicksign.Models.Templates;
 import com.example.palexis3.quicksign.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class QuickSignMainActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
+    //private Toolbar toolbar;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter recyclerAdapter;
     ArrayList<SectionTemplates> sectionTemplatesArrayList;
@@ -34,23 +34,28 @@ public class QuickSignMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quick_sign_main);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         sectionTemplatesArrayList = new ArrayList<>();
 
-        String[] personalArray = new String[]{"Best Friend", "Break-Up", "Love", "Divorce"};
-        String[] eventsArray = new String[]{"Wedding Planner", "DJ Contract", "Bartending", "Vendor"};
-        String[] householdsArray = new String[]{"Remodeling", "Gardening", "HouseKeeping", "Swimming Pool"};
+        String[] personalArray = new String[]{"PreNuptial", "Break-Up", "Love", "Divorce"};
+        String[] eventsArray = new String[]{"Wedding Planner", "DJ Contract", "Bartending", "Makeup"};
+        String[] householdsArray = new String[]{"Yardwork", "Gardening", "HouseKeeping", "Swimming Pool"};
+
+        personalMap = new HashMap<>();
+        eventsMap = new HashMap<>();
+        houseHoldsMap = new HashMap<>();
 
         // populating
         personalMap.put(descriptions_array[0], personalArray);
         eventsMap.put(descriptions_array[1], eventsArray);
         houseHoldsMap.put(descriptions_array[2], householdsArray);
 
+        /*
         if(toolbar == null) {
             setSupportActionBar(toolbar);
             toolbar.setTitle("Quick Sign");
         }
+        */
 
         populateArrayList();
 
@@ -65,7 +70,6 @@ public class QuickSignMainActivity extends AppCompatActivity {
 
     // pre-populate our list with items
     private void populateArrayList() {
-
 
         String break_up = "On this day, {date}, {Party 1 Name} (hereafter \"Party 1\") and {Party 2 Name} (hereafter \"Party 2\"), both desiring to dissolve their romantic relationship, agree to abide by the following rules and stipulations:\n" +
                 "\n" +
@@ -94,14 +98,25 @@ public class QuickSignMainActivity extends AppCompatActivity {
 
             // getting the arrays of each theme
             switch (i) {
+                // personal
                 case 0:
                     arr = personalMap.get(descriptions_array[0]);
+                    imageArr = new String[]{"https://www.imoney.my/articles/wp-content/uploads/10-Reasons-To-Have-A-Prenuptial-Agreement-image-1-of-1.jpg",
+                        "https://www.askideas.com/media/78/Red-Broken-Heart-Clipart.png", "https://i.stack.imgur.com/iBCpb.png", "https://www.marriageministry.org/wp-content/uploads/divorce.jpg"};
                     break;
+                // events
                 case 1:
                     arr = eventsMap.get(descriptions_array[1]);
+                    imageArr = new String[]{"http://www.startupguys.net/wp-content/uploads/2016/09/wedding-planner-business-1.jpg",
+                            "http://www.honorshaven.com/wp-content/uploads/2016/10/DJ.jpg", "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTbQinhnFmlUroIMAtSciualRdoyKw9sscRtD1T9_OQ4y-ayocs",
+                            "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSqsXhAsB2eO3hGD9ERo-WNMf769eBlsRxU_YDtluPlN8lwd5Jt9Q"};
                     break;
+                // household
                 case 2:
                     arr = houseHoldsMap.get(descriptions_array[2]);
+                    imageArr = new String[]{"http://randdlawncare.com/wp-content/uploads/2012/03/e772e_large_Yardwork.jpg",
+                            "http://drwillard.com/blog/wp-content/uploads/2015/07/o-GARDENING-TOOL-facebook.jpg",
+                            "https://www.selfhelpelderly.org/wp-content/uploads/2014/08/Housekeeping-Training.jpg", "https://upload.wikimedia.org/wikipedia/commons/b/b5/FreeGreatPicture.com-30424-swimming-pool.jpg"};
                     break;
                 default:
                     Toast.makeText(this, "Could not get list to this particular description", Toast.LENGTH_LONG).show();
@@ -125,6 +140,7 @@ public class QuickSignMainActivity extends AppCompatActivity {
             }
 
             sectionTemplate.setTemplatesArrayList(list);
+            sectionTemplatesArrayList.add(sectionTemplate);
 
         }
     }

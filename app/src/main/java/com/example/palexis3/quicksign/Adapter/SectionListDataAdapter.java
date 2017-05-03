@@ -70,9 +70,8 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
         // reset holder image
         holder.image.setImageResource(0);
 
-        Picasso.with(context).load(template.getImageUrl()).transform(new RoundedCornersTransformation(10, 10)).into(holder.image);
+        Picasso.with(context).load(template.getImageUrl()).fit().transform(new RoundedCornersTransformation(10, 10)).into(holder.image);
     }
-
 
     @Override
     public int getItemCount() {
